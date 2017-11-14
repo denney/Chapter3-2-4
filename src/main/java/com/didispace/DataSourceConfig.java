@@ -33,4 +33,23 @@ public class DataSourceConfig {
         return DataSourceBuilder.create().build();
     }
 
+
+    @Bean(name = "wso2SocialDataSource")
+    @Qualifier("wso2SocialDataSource")
+    @Primary
+    @ConfigurationProperties(prefix="spring.datasource.wso2Social")
+    public DataSource wso2SocialDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+
+    @Bean(name = "esStorangeDataSource")
+    @Qualifier("esStorangeDataSource")
+    @Primary
+    @ConfigurationProperties(prefix="spring.datasource.esStorange")
+    public DataSource esStorangeDataSource() {
+        return DataSourceBuilder.create().build();
+    }
+
+
 }

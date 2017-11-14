@@ -1,4 +1,4 @@
-package com.didispace;
+package com.didispace.configClass;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -6,7 +6,6 @@ import org.springframework.boot.autoconfigure.orm.jpa.JpaProperties;
 import org.springframework.boot.orm.jpa.EntityManagerFactoryBuilder;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 import org.springframework.orm.jpa.JpaTransactionManager;
 import org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean;
@@ -20,28 +19,28 @@ import java.util.Map;
 @Configuration
 @EnableTransactionManagement
 @EnableJpaRepositories(
-        entityManagerFactoryRef="entityManagerFactoryPrimary",
-        transactionManagerRef="transactionManagerPrimary",
-        basePackages= { "com.didispace.domain.p" }) //设置Repository所在位置
-public class PrimaryConfig {
+        entityManagerFactoryRef="entityManagerFactoryWso2Social",
+        transactionManagerRef="transactionManagerWso2Social",
+        basePackages= {"com.didispace.entityAndDao.Wso2SOCIAL"}) //设置Repository所在位置
+public class WSO2_SOCIAL_DB_Config {
 
-    @Autowired @Qualifier("primaryDataSource")
-    private DataSource primaryDataSource;
+    @Autowired @Qualifier("wso2SocialDataSource")
+    private DataSource wso2SocialDataSource;
 
-//    @Primary
-    @Bean(name = "entityManagerPrimary")
+
+    @Bean(name = "entityManagerWso2Social")
     public EntityManager entityManager(EntityManagerFactoryBuilder builder) {
-        return entityManagerFactoryPrimary(builder).getObject().createEntityManager();
+        return entityManagerFactoryWso2Social(builder).getObject().createEntityManager();
     }
 
-//    @Primary
-    @Bean(name = "entityManagerFactoryPrimary")
-    public LocalContainerEntityManagerFactoryBean entityManagerFactoryPrimary (EntityManagerFactoryBuilder builder) {
+
+    @Bean(name = "entityManagerFactoryWso2Social")
+    public LocalContainerEntityManagerFactoryBean entityManagerFactoryWso2Social (EntityManagerFactoryBuilder builder) {
         return builder
-                .dataSource(primaryDataSource)
-                .properties(getVendorProperties(primaryDataSource))
-                .packages("com.didispace.domain.p") //设置实体类所在位置
-                .persistenceUnit("primaryPersistenceUnit")
+                .dataSource(wso2SocialDataSource)
+                .properties(getVendorProperties(wso2SocialDataSource))
+                .packages("com.didispace.entityAndDao.Wso2SOCIAL") //设置实体类所在位置
+                .persistenceUnit("wso2SocialPersistenceUnit")
                 .build();
     }
 
@@ -52,10 +51,10 @@ public class PrimaryConfig {
         return jpaProperties.getHibernateProperties(dataSource);
     }
 
-//    @Primary
-    @Bean(name = "transactionManagerPrimary")
-    public PlatformTransactionManager transactionManagerPrimary(EntityManagerFactoryBuilder builder) {
-        return new JpaTransactionManager(entityManagerFactoryPrimary(builder).getObject());
+
+    @Bean(name = "transactionManagerWso2Social")
+    public PlatformTransactionManager transactionManagerWso2Social(EntityManagerFactoryBuilder builder) {
+        return new JpaTransactionManager(entityManagerFactoryWso2Social(builder).getObject());
     }
 
 }

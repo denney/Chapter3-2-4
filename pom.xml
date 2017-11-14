@@ -6,7 +6,7 @@
 	<groupId>com.didispace</groupId>
 	<artifactId>Chapter3-2-4</artifactId>
 	<version>1.0.0</version>
-	<packaging>jar</packaging>
+	<packaging>war</packaging>
 
 	<name>Chapter3-2-4</name>
 	<description>Spring Boot project</description>

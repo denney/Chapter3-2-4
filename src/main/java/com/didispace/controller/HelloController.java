@@ -1,5 +1,6 @@
 package com.didispace.controller;
 
+import com.didispace.domain.p.User;
 import com.didispace.domain.p.UserRepository;
 import com.didispace.domain.s.MessageRepository;
 import com.didispace.domain.s.SocialRatingCacheRepository1;
@@ -26,8 +27,10 @@ public class HelloController {
 
     @Autowired
     private SocialRatingCacheRepository1 socialRatingCacheRepository_1_s;
+
     @RequestMapping("/hello")
     public String index() throws IOException {
+/*
 
         List<com.didispace.domain.p.SocialRatingCache> list_p=socialRatingCacheRepository_P.findAll();
         ObjectMapper mapper= new ObjectMapper();
@@ -39,9 +42,11 @@ public class HelloController {
 //the sieze of the list is dependon the str json length although the json content is not the POJO type maybe
         List<com.didispace.domain.s.SocialRatingCache> list = mapper.readValue(list_p_json, listType);
         socialRatingCacheRepository_1_s.save(list);
+*/
 
-
-
+        List<User> list_user = userRepository.findAll();
+        String list_user_json = new ObjectMapper().writeValueAsString(list_user);
+        System.out.println("list_user_json=" + list_user_json);
 
 
         return "Hello World";
